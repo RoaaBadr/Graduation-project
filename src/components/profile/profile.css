@@ -1,0 +1,62 @@
+/* profile.css */
+
+.profilebody {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .resume1 {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pen{
+    margin-top: 20px;
+    background-color: #eeeeee;
+    height: 4rem;
+    margin-left: 12px;
+    border: #d4cfbe 1px solid;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    
+  }
+  
+  .form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .form-control:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .invalid-feedback {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .edit {
+    background-color: #75550b;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  
+  }
+  
+  .edit:hover {
+    background-color: #3a2507;
+  }
