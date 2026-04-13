@@ -1,27 +1,33 @@
 import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import dbData from '../data.js';
 import Navbar from "../sections/Navbar.jsx";
 
 export default function Videos() {
   const { id } = useParams();
-  const videoList = JSON.parse(localStorage.getItem('videoList')) || [];
-  const recipe = videoList.find(video => video.videoId === id);
+  const [recipe, setRecipe] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!recipe) {
-    return <p>Video not found.</p>;
-  }
+  useEffect(() => {
+    const video = dbData.videos.find(v => v.id === id);
+    setRecipe(video || null);
+    setIsLoading(false);
+  }, [id]);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (!recipe) return <p>Video not found.</p>;
+
   return (
     <>
       <Navbar />
       <div className="recipe-container">
-     
-
         {recipe && (
           <div className="recipe">
             <h2 className="recipe-title">{recipe.title}</h2>
             <h3 className="recipe-type">{recipe.type}</h3> 
 
       <iframe
-            src={`https://www.youtube.com/embed/${recipe.videoId}`}
+            src={recipe.video}
             title={recipe.title}
             allowFullScreen
           ></iframe> 

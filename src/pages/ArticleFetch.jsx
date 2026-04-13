@@ -3,10 +3,9 @@ import useFetch from '../hooks/useFetch.jsx';
 import Navbar from '../sections/Navbar.jsx';
 
 function Home() {
-  const { data, isLoading, error } = useFetch('https://g-p-1k1q.onrender.com/GP/articles/getall');
+  const { data, isLoading, error } = useFetch('articles');
 
-  // Ensure `data` and `data.data` are defined before using them
-  const recipes = data ? data.data : [];
+  const recipes = data?.data ? data.data : [];
 
   return (
     <>

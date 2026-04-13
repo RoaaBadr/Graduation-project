@@ -5,7 +5,7 @@ import Navbar from '../sections/Navbar.jsx';
  
 function Videos() {
 
-  const { data, isLoading, error } = useFetch('https://g-p-1k1q.onrender.com/GP/videos/get-videos')
+  const { data, isLoading, error } = useFetch('videos')
   
     return (
     <><Navbar/>
@@ -15,7 +15,7 @@ function Videos() {
         <h1 className="home-title-1">Videos List</h1>  </div>
          {error && <p className='error'>{error}</p>}
          {isLoading && <p className='loading'>Loading Videos...</p>}
-        <RecipeList recipes={data}/>
+        <RecipeList videos={data}/>
       </div></>
     )
   }

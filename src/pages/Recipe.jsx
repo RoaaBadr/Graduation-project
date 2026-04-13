@@ -1,27 +1,31 @@
 import { useParams, Link } from 'react-router-dom';
-import useFetch from '../hooks/useFetch.jsx';
+import { useState, useEffect } from 'react';
+import dbData from '../data.js';
 import Navbar from '../sections/Navbar.jsx';
 
 export default function Recipe() {
   const { id } = useParams();
-  const url = `https://g-p-1k1q.onrender.com/GP/articles/get-one/${id}`;
-  const { error, isLoading, data } = useFetch(url);
+  const [recipe, setRecipe] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const recipe = data ? data.Data : null;
+  useEffect(() => {
+    setIsLoading(true);
+    const article = dbData.articles.find(a => a.id === id);
+    setRecipe(article || null);
+    setIsLoading(false);
+  }, [id]);
 
   return (
     <>
       <Navbar />
       <div className="recipe-container">
-        {error && <p className="error">{error}</p>}
         {isLoading && <p className="loading">Loading Articles...</p>}
         {recipe ? (
           <div className="recipe">
             <h2 className="recipe-title">{recipe.title}</h2>
             <p className="recipe-content">{recipe.content}</p>
-            <p className="recipe-tags">Tags: {recipe.tags.join(', ')}</p>
-            <p className="recipe-publish-date">Published on: {new Date(recipe.publish_date).toLocaleDateString()}</p>
-            <p className="recipe-author">Published by: {recipe.publish_by}</p>
+            <p className="recipe-tags">Type: {recipe.type}</p>
+            <p className="recipe-author">Author: {recipe.author}</p>
           </div>
         ) : (
           !isLoading && <p>No recipe found</p>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import dbData from '../data.js';
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
@@ -6,45 +7,35 @@ const useFetch = (url) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
-      console.log(`Fetching data from ${url}`);
+      console.log(`Fetching data for: ${url}`);
       try {
-        const response = await fetch(url, {
-          signal,
-          credentials: 'include', // Send cookies with the request
-        });
-        if (!response.ok) {
-          throw new Error(`Could not fetch the data for that resource: ${response.statusText}`);
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        let localData = null;
+        if (url.includes('articles') || url === 'articles') {
+          localData = { data: dbData.articles };
+        } else if (url.includes('videos') || url === 'videos') {
+          localData = dbData.videos;
         }
-        const data = await response.json();
-        if (!signal.aborted) {
-          setData(data);
+        
+        if (localData) {
+          setData(localData);
           setIsLoading(false);
-          console.log('Data fetched successfully:', data);
+          console.log('Data fetched successfully from local db.json:', localData);
+        } else {
+          throw new Error(`No local data mapping found for: ${url}`);
         }
       } catch (err) {
-        if (signal.aborted) {
-          console.log(err);
-          console.log('Fetch aborted');
-        } else {
-          setError(err.message);
-          setIsLoading(false);
-          console.error('Fetch error:', err);
-        }
+        setError(err.message);
+        setIsLoading(false);
+        console.error('Fetch error:', err);
       }
     };
 
     fetchData();
-
-    return () => {
-      abortController.abort();
-      console.log('Fetch aborted on cleanup');
-    };
   }, [url]);
 
   return { data, isLoading, error };
